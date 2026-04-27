@@ -97,7 +97,7 @@ function Menu() {
                 }
 
                 {/*con esto ponemos el pdf de ayuda*/}
-                <Link to="/Acosta_Tse_Karen_UT4A1.pdf" target="_blank">
+                <Link to="/Acosta_Tse_Karen_UT2A4.pdf" target="_blank">
                     <Tooltip title="Abrir manual de usuario" arrow placement="right">
                         <ListItemButton>
                             <ListItemIcon sx={{color: 'secondary.main'}}>
