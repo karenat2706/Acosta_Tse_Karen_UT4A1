@@ -21,6 +21,8 @@ import CottageIcon from '@mui/icons-material/Cottage';
 import FeedIcon from '@mui/icons-material/Feed';
 import HelpIcon from '@mui/icons-material/Help';
 import OutputIcon from '@mui/icons-material/Output';
+//aqui declaramo el Tooltip
+import Tooltip from '@mui/material/Tooltip';
 
 import {Link} from 'react-router-dom';
 
@@ -58,51 +60,63 @@ function Menu() {
             {/*Link a las distintas paginas de la app*/}
             <List>
                 <Link to={'/home'}>
-                    <ListItemButton>
-                        <ListItemIcon sx={{color: 'secondary.main'}}>
-                            <CottageIcon/>
-                        </ListItemIcon>
-                        <ListItemText sx={{color: 'primary.main'}}>Inicio</ListItemText>
-                    </ListItemButton>
+                    <Tooltip title="Ir a la página de inicio" arrow placement="right">
+                        <ListItemButton>
+                            <ListItemIcon sx={{color: 'secondary.main'}}>
+                                <CottageIcon/>
+                            </ListItemIcon>
+                            <ListItemText sx={{color: 'primary.main'}}>Inicio</ListItemText>
+                        </ListItemButton>
+                    </Tooltip>
                 </Link>
 
                 {/*Solo el usuario admin puede ver la seccion reports*/}
-
-                    <Link to={'/reports'}>
+                <Link to={'/reports'}>
+                    <Tooltip title="Ver informes generados" arrow placement="right">
                         <ListItemButton>
                             <ListItemIcon sx={{color: 'secondary.main'}}>
                                 <FeedIcon/>
                             </ListItemIcon>
                             <ListItemText sx={{color: 'primary.main'}}>Informes</ListItemText>
                         </ListItemButton>
-                    </Link>
+                    </Tooltip>
+                </Link>
 
                 {/*Solo el usuario admin puede gestionar usuarios*/}
                 {userData.userRol == "admin" &&
                     <Link to={'/gestionusuarios'}>
-                        <ListItemButton>
-                            <ListItemIcon sx={{color: 'secondary.main'}}>
-                                <ManageAccountsIcon/>
-                            </ListItemIcon>
-                            <ListItemText sx={{color: 'primary.main'}}>Gestionar Usuarios</ListItemText>
-                        </ListItemButton>
+                        <Tooltip title="Administrar usuarios del sistema" arrow placement="right">
+                            <ListItemButton>
+                                <ListItemIcon sx={{color: 'secondary.main'}}>
+                                    <ManageAccountsIcon/>
+                                </ListItemIcon>
+                                <ListItemText sx={{color: 'primary.main'}}>Gestionar Usuarios</ListItemText>
+                            </ListItemButton>
+                        </Tooltip>
                     </Link>
                 }
-                <Link to={'/help'}>
-                    <ListItemButton>
-                        <ListItemIcon sx={{color: 'secondary.main'}}>
-                            <HelpIcon/>
-                        </ListItemIcon>
-                        <ListItemText sx={{color: 'primary.main'}}>Ayuda</ListItemText>
-                    </ListItemButton>
+
+                {/*con esto ponemos el pdf de ayuda*/}
+                <Link to="/Acosta_Tse_Karen_UT4A1.pdf" target="_blank">
+                    <Tooltip title="Abrir manual de usuario" arrow placement="right">
+                        <ListItemButton>
+                            <ListItemIcon sx={{color: 'secondary.main'}}>
+                                <HelpIcon/>
+                            </ListItemIcon>
+                            <ListItemText sx={{color: 'primary.main'}}>Ayuda</ListItemText>
+                        </ListItemButton>
+                    </Tooltip>
                 </Link>
 
-                <ListItemButton onClick={handleLogOut}>
-                    <ListItemIcon sx={{color: 'secondary.main'}}>
-                        <OutputIcon/>
-                    </ListItemIcon>
-                    <ListItemText sx={{color: 'primary.main'}}>Salir</ListItemText>
-                </ListItemButton>
+                {/*aqui salimos de la sesion*/}
+                <Tooltip title="Cerrar sesión" arrow placement="right">
+                    <ListItemButton onClick={handleLogOut}>
+                        <ListItemIcon sx={{color: 'secondary.main'}}>
+                            <OutputIcon/>
+                        </ListItemIcon>
+                        <ListItemText sx={{color: 'primary.main'}}>Salir</ListItemText>
+                    </ListItemButton>
+                </Tooltip>
             </List>
         </Box>
     );
@@ -113,29 +127,37 @@ function Menu() {
                 <AppBar>
                     <Toolbar>
                         {/*Icono de usuario*/}
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{mr: 2}}
-                            onClick={toggleDrawer(true)}
-                        >
-                            <MenuIcon/>
-                        </IconButton>
+                        <Tooltip title="Abrir menú de navegación" arrow placement="bottom">
+                            <IconButton
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                sx={{mr: 2}}
+                                onClick={toggleDrawer(true)}
+                            >
+                                <MenuIcon/>
+                            </IconButton>
+                        </Tooltip>
                         {/*Nombre de usuario*/}
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                             {userData.userName}
                         </Typography>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{mr: 2}}>
-                            {userData.userRol == "admin" ?
-                                <AdminPanelSettingsIcon/> : <AdbIcon/> }
-                        </IconButton>
+                        <Tooltip
+                            title={userData.userRol == "admin" ? "Usuario administrador" : "Usuario estándar"}
+                            arrow
+                            placement="bottom"
+                        >
+                            <IconButton
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                sx={{mr: 2}}
+                            >
+                                {userData.userRol == "admin" ? <AdminPanelSettingsIcon/> : <AdbIcon/>}
+                            </IconButton>
+                        </Tooltip>
                     </Toolbar>
                 </AppBar>
             </Box>
